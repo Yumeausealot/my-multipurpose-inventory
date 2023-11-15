@@ -19,36 +19,25 @@ class ShowInventoryPage extends StatelessWidget {
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: Future.value(GrudgeData.grudges),
         builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator();
-          } 
-          else if (snapshot.hasError) {
-            return const Text('Error loading data');
-          } 
-          else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-            return const Text('No grudges found');
-          } 
-          else {
-            List<Map<String, dynamic>> grudges = snapshot.data!;
-            return DataTable(
-              columns: [
-                DataColumn(label: Text('Name')),
-                DataColumn(label: Text('Amount')),
-                DataColumn(label: Text('Description')),
-              ],
-              rows: grudges
-                  .map(
-                    (grudge) => DataRow(
-                      cells: [
-                        DataCell(Text(grudge['name'].toString())),
-                        DataCell(Text(grudge['amount'].toString())),
-                        DataCell(Text(grudge['description'].toString())),
-                      ],
-                    ),
-                  )
-                  .toList(),
-            );
-          }
+          List<Map<String, dynamic>> grudges = snapshot.data!;
+          return DataTable(
+            columns: [
+              DataColumn(label: Text('Name')),
+              DataColumn(label: Text('Amount')),
+              DataColumn(label: Text('Description')),
+            ],
+            rows: grudges
+              .map(
+                (grudge) => DataRow(
+                  cells: [
+                    DataCell(Text(grudge['name'].toString())),
+                    DataCell(Text(grudge['amount'].toString())),
+                    DataCell(Text(grudge['description'].toString())),
+                  ],
+                ),
+              )
+            .toList(),
+          );  
         },
       ),
     );
