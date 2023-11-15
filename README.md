@@ -42,7 +42,7 @@
 
     h. Material
 
-        untuk
+        untuk mengatur bentuk, warna, dan keresponsivan card
 
     i. InkWell
 
@@ -54,11 +54,11 @@
 
     k. MaterialApp
         
-
+        untuk menentukan struktur utama aplikasi flutter
 
     l. Center
 
-        untuk menempatkan 
+        untuk menempatkan children ke tengah
 
 
 3. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step (bukan hanya sekadar mengikuti tutorial)
