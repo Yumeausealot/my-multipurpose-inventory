@@ -125,6 +125,4 @@
 
     6. memindahkan grudgesitem ke inventory_card dan mengimpor semua import yang dibutuhkan seperti import inventorylist_form ke inventory_card dan import inventory_card ke menu
 
-    7. menambahkan error handling jika data tidak muncul atau belum ada di dalam list di show_inventory
-
-    8. add, commit, dan push ke repo online
+    7. add, commit, dan push ke repo online
