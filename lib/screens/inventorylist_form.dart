@@ -1,6 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:my_multipurpose_inventory/grudge_data.dart';
+import 'package:my_multipurpose_inventory/screens/menu.dart';
 import 'package:my_multipurpose_inventory/widgets/left_drawer.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class InventoryFormPage extends StatefulWidget {
   const InventoryFormPage({super.key});
@@ -16,6 +20,7 @@ class _InventoryFormPageState extends State<InventoryFormPage> {
   String _description = "";
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -114,42 +119,34 @@ class _InventoryFormPageState extends State<InventoryFormPage> {
                       backgroundColor:
                           MaterialStateProperty.all(Colors.indigo),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState!.validate()) {
-                        GrudgeData.grudges.add({
+                        // Kirim ke Django dan tunggu respons
+                        // TODO: Ganti URL dan jangan lupa tambahkan trailing slash (/) di akhir URL!
+                        final response = await request.postJson(
+                        "http://localhost:8000/create-flutter/",
+                        jsonEncode(<String, String>{
                           'name': _name,
-                          'amount': _amount,
+                          'price': _amount.toString(),
                           'description': _description,
-                        });
-                        
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('Grudge successfully added'),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Text('Name: $_name'),
-                                    Text('Amount: $_amount'),
-                                    Text('Description: $_description'),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                ),
-                              ],
+                          // TODO: Sesuaikan field data sesuai dengan aplikasimu
+                        }));
+                        if (response['status'] == 'success') {
+                          ScaffoldMessenger.of(context)
+                              .showSnackBar(const SnackBar(
+                          content: Text("Produk baru berhasil disimpan!"),
+                          ));
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(builder: (context) => MyHomePage()),
                             );
-                          },
-                        );
-                      _formKey.currentState!.reset();
+                        } else {
+                            ScaffoldMessenger.of(context)
+                                .showSnackBar(const SnackBar(
+                                content:
+                                    Text("Terdapat kesalahan, silakan coba lagi."),
+                            ));
+                          }
                       }
                     },
                     child: const Text(

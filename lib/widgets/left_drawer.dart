@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:my_multipurpose_inventory/screens/list_product.dart';
 import 'package:my_multipurpose_inventory/screens/menu.dart';
 import 'package:my_multipurpose_inventory/screens/inventorylist_form.dart';
-import 'package:my_multipurpose_inventory/screens/show_inventory.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -67,14 +67,25 @@ class LeftDrawer extends StatelessWidget {
             leading: const Icon(Icons.checklist),
             title: const Text('View Grudges'),
             onTap: () {
-              Navigator.pushReplacement(
+              Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ShowInventoryPage(),
+                  builder: (context) => const ProductPage(),
                 ),
               );
             },
           ),
+          // ListTile(
+          //   leading: const Icon(Icons.shopping_basket),
+          //   title: const Text('Daftar Produk'),
+          //   onTap: () {
+          //     // Route menu ke halaman produk
+          //     Navigator.push(
+          //     context,
+          //     MaterialPageRoute(builder: (context) => const ProductPage()),
+          //     );
+          //   },
+          // ),
         ],
       ),
     );
